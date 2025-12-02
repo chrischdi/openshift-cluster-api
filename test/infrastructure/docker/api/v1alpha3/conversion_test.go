@@ -22,23 +22,23 @@ import (
 	"testing"
 
 	infrav1 "sigs.k8s.io/cluster-api/test/infrastructure/docker/api/v1beta1"
-	utilconversion "sigs.k8s.io/cluster-api/util/conversion"
+	utilconversiontest "sigs.k8s.io/cluster-api/util/conversion_test"
 )
 
 // Test is disabled when the race detector is enabled (via "//go:build !race" above) because otherwise the fuzz tests would just time out.
 
 func TestFuzzyConversion(t *testing.T) {
-	t.Run("for DockerCluster", utilconversion.FuzzTestFunc(utilconversion.FuzzTestFuncInput{
+	t.Run("for DockerCluster", utilconversiontest.FuzzTestFunc(utilconversiontest.FuzzTestFuncInput{
 		Hub:   &infrav1.DockerCluster{},
 		Spoke: &DockerCluster{},
 	}))
 
-	t.Run("for DockerMachine", utilconversion.FuzzTestFunc(utilconversion.FuzzTestFuncInput{
+	t.Run("for DockerMachine", utilconversiontest.FuzzTestFunc(utilconversiontest.FuzzTestFuncInput{
 		Hub:   &infrav1.DockerMachine{},
 		Spoke: &DockerMachine{},
 	}))
 
-	t.Run("for DockerMachineTemplate", utilconversion.FuzzTestFunc(utilconversion.FuzzTestFuncInput{
+	t.Run("for DockerMachineTemplate", utilconversiontest.FuzzTestFunc(utilconversiontest.FuzzTestFuncInput{
 		Hub:   &infrav1.DockerMachineTemplate{},
 		Spoke: &DockerMachineTemplate{},
 	}))

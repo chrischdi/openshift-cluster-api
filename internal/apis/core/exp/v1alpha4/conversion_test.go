@@ -22,13 +22,13 @@ import (
 	"testing"
 
 	expv1 "sigs.k8s.io/cluster-api/exp/api/v1beta1"
-	utilconversion "sigs.k8s.io/cluster-api/util/conversion"
+	utilconversiontest "sigs.k8s.io/cluster-api/util/conversion_test"
 )
 
 // Test is disabled when the race detector is enabled (via "//go:build !race" above) because otherwise the fuzz tests would just time out.
 
 func TestFuzzyConversion(t *testing.T) {
-	t.Run("for MachinePool", utilconversion.FuzzTestFunc(utilconversion.FuzzTestFuncInput{
+	t.Run("for MachinePool", utilconversiontest.FuzzTestFunc(utilconversiontest.FuzzTestFuncInput{
 		Hub:   &expv1.MachinePool{},
 		Spoke: &MachinePool{},
 	}))

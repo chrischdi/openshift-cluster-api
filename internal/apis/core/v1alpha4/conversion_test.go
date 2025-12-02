@@ -29,42 +29,42 @@ import (
 	"k8s.io/utils/ptr"
 
 	clusterv1 "sigs.k8s.io/cluster-api/api/v1beta1"
-	utilconversion "sigs.k8s.io/cluster-api/util/conversion"
+	utilconversiontest "sigs.k8s.io/cluster-api/util/conversion_test"
 )
 
 // Test is disabled when the race detector is enabled (via "//go:build !race" above) because otherwise the fuzz tests would just time out.
 
 func TestFuzzyConversion(t *testing.T) {
-	t.Run("for Cluster", utilconversion.FuzzTestFunc(utilconversion.FuzzTestFuncInput{
+	t.Run("for Cluster", utilconversiontest.FuzzTestFunc(utilconversiontest.FuzzTestFuncInput{
 		Hub:         &clusterv1.Cluster{},
 		Spoke:       &Cluster{},
 		FuzzerFuncs: []fuzzer.FuzzerFuncs{ClusterJSONFuzzFuncs},
 	}))
-	t.Run("for ClusterClass", utilconversion.FuzzTestFunc(utilconversion.FuzzTestFuncInput{
+	t.Run("for ClusterClass", utilconversiontest.FuzzTestFunc(utilconversiontest.FuzzTestFuncInput{
 		Hub:         &clusterv1.ClusterClass{},
 		Spoke:       &ClusterClass{},
 		FuzzerFuncs: []fuzzer.FuzzerFuncs{ClusterClassJSONFuzzFuncs},
 	}))
 
-	t.Run("for Machine", utilconversion.FuzzTestFunc(utilconversion.FuzzTestFuncInput{
+	t.Run("for Machine", utilconversiontest.FuzzTestFunc(utilconversiontest.FuzzTestFuncInput{
 		Hub:         &clusterv1.Machine{},
 		Spoke:       &Machine{},
 		FuzzerFuncs: []fuzzer.FuzzerFuncs{MachineStatusFuzzFunc},
 	}))
 
-	t.Run("for MachineSet", utilconversion.FuzzTestFunc(utilconversion.FuzzTestFuncInput{
+	t.Run("for MachineSet", utilconversiontest.FuzzTestFunc(utilconversiontest.FuzzTestFuncInput{
 		Hub:         &clusterv1.MachineSet{},
 		Spoke:       &MachineSet{},
 		FuzzerFuncs: []fuzzer.FuzzerFuncs{},
 	}))
 
-	t.Run("for MachineDeployment", utilconversion.FuzzTestFunc(utilconversion.FuzzTestFuncInput{
+	t.Run("for MachineDeployment", utilconversiontest.FuzzTestFunc(utilconversiontest.FuzzTestFuncInput{
 		Hub:         &clusterv1.MachineDeployment{},
 		Spoke:       &MachineDeployment{},
 		FuzzerFuncs: []fuzzer.FuzzerFuncs{},
 	}))
 
-	t.Run("for MachineHealthCheck", utilconversion.FuzzTestFunc(utilconversion.FuzzTestFuncInput{
+	t.Run("for MachineHealthCheck", utilconversiontest.FuzzTestFunc(utilconversiontest.FuzzTestFuncInput{
 		Hub:   &clusterv1.MachineHealthCheck{},
 		Spoke: &MachineHealthCheck{},
 	}))

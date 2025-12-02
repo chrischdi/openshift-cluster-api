@@ -22,17 +22,17 @@ import (
 	"testing"
 
 	addonsv1 "sigs.k8s.io/cluster-api/api/addons/v1beta1"
-	utilconversion "sigs.k8s.io/cluster-api/util/conversion"
+	utilconversiontest "sigs.k8s.io/cluster-api/util/conversion_test"
 )
 
 // Test is disabled when the race detector is enabled (via "//go:build !race" above) because otherwise the fuzz tests would just time out.
 
 func TestFuzzyConversion(t *testing.T) {
-	t.Run("for ClusterResourceSet", utilconversion.FuzzTestFunc(utilconversion.FuzzTestFuncInput{
+	t.Run("for ClusterResourceSet", utilconversiontest.FuzzTestFunc(utilconversiontest.FuzzTestFuncInput{
 		Hub:   &addonsv1.ClusterResourceSet{},
 		Spoke: &ClusterResourceSet{},
 	}))
-	t.Run("for ClusterResourceSetBinding", utilconversion.FuzzTestFunc(utilconversion.FuzzTestFuncInput{
+	t.Run("for ClusterResourceSetBinding", utilconversiontest.FuzzTestFunc(utilconversiontest.FuzzTestFuncInput{
 		Hub:   &addonsv1.ClusterResourceSetBinding{},
 		Spoke: &ClusterResourceSetBinding{},
 	}))

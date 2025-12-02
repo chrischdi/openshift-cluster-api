@@ -28,7 +28,7 @@ import (
 	runtimeserializer "k8s.io/apimachinery/pkg/runtime/serializer"
 
 	bootstrapv1 "sigs.k8s.io/cluster-api/bootstrap/kubeadm/api/v1beta1"
-	utilconversion "sigs.k8s.io/cluster-api/util/conversion"
+	utilconversiontest "sigs.k8s.io/cluster-api/util/conversion_test"
 )
 
 // Test is disabled when the race detector is enabled (via "//go:build !race" above) because otherwise the fuzz tests would just time out.
@@ -39,7 +39,7 @@ func TestFuzzyConversion(t *testing.T) {
 	g.Expect(AddToScheme(scheme)).To(Succeed())
 	g.Expect(bootstrapv1.AddToScheme(scheme)).To(Succeed())
 
-	t.Run("for ClusterConfiguration", utilconversion.FuzzTestFunc(utilconversion.FuzzTestFuncInput{
+	t.Run("for ClusterConfiguration", utilconversiontest.FuzzTestFunc(utilconversiontest.FuzzTestFuncInput{
 		Scheme: scheme,
 		Hub:    &bootstrapv1.ClusterConfiguration{},
 		Spoke:  &ClusterConfiguration{},
@@ -47,7 +47,7 @@ func TestFuzzyConversion(t *testing.T) {
 		SkipSpokeAnnotationCleanup: true,
 		FuzzerFuncs:                []fuzzer.FuzzerFuncs{fuzzFuncs},
 	}))
-	t.Run("for InitConfiguration", utilconversion.FuzzTestFunc(utilconversion.FuzzTestFuncInput{
+	t.Run("for InitConfiguration", utilconversiontest.FuzzTestFunc(utilconversiontest.FuzzTestFuncInput{
 		Scheme: scheme,
 		Hub:    &bootstrapv1.InitConfiguration{},
 		Spoke:  &InitConfiguration{},
@@ -55,7 +55,7 @@ func TestFuzzyConversion(t *testing.T) {
 		SkipSpokeAnnotationCleanup: true,
 		FuzzerFuncs:                []fuzzer.FuzzerFuncs{fuzzFuncs},
 	}))
-	t.Run("for JoinConfiguration", utilconversion.FuzzTestFunc(utilconversion.FuzzTestFuncInput{
+	t.Run("for JoinConfiguration", utilconversiontest.FuzzTestFunc(utilconversiontest.FuzzTestFuncInput{
 		Scheme: scheme,
 		Hub:    &bootstrapv1.JoinConfiguration{},
 		Spoke:  &JoinConfiguration{},

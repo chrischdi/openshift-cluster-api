@@ -24,18 +24,18 @@ import (
 	"k8s.io/apimachinery/pkg/api/apitesting/fuzzer"
 
 	ipamv1 "sigs.k8s.io/cluster-api/exp/ipam/api/v1beta1"
-	utilconversion "sigs.k8s.io/cluster-api/util/conversion"
+	utilconversiontest "sigs.k8s.io/cluster-api/util/conversion_test"
 )
 
 // Test is disabled when the race detector is enabled (via "//go:build !race" above) because otherwise the fuzz tests would just time out.
 
 func TestFuzzyConversion(t *testing.T) {
-	t.Run("for IPAddress", utilconversion.FuzzTestFunc(utilconversion.FuzzTestFuncInput{
+	t.Run("for IPAddress", utilconversiontest.FuzzTestFunc(utilconversiontest.FuzzTestFuncInput{
 		Hub:         &ipamv1.IPAddress{},
 		Spoke:       &IPAddress{},
 		FuzzerFuncs: []fuzzer.FuzzerFuncs{},
 	}))
-	t.Run("for IPAddressClaim", utilconversion.FuzzTestFunc(utilconversion.FuzzTestFuncInput{
+	t.Run("for IPAddressClaim", utilconversiontest.FuzzTestFunc(utilconversiontest.FuzzTestFuncInput{
 		Hub:         &ipamv1.IPAddressClaim{},
 		Spoke:       &IPAddressClaim{},
 		FuzzerFuncs: []fuzzer.FuzzerFuncs{},
